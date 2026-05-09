@@ -3,6 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.transactionguard</groupId>
@@ -11,18 +12,24 @@
     <packaging>jar</packaging>
 
     <name>Transaction Guard API</name>
-    <description>Transaction Guard API Testing</description>
+    <description>Backend QA automation project for financial transaction testing</description>
 
     <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <java.version>21</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
         <spring-boot.version>3.1.5</spring-boot.version>
         <jacoco.version>0.8.10</jacoco.version>
+        <allure.version>2.24.0</allure.version>
+        <testcontainers.version>1.19.3</testcontainers.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+
+            <!-- Spring Boot -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -30,10 +37,12 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
+
         <!-- Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -91,31 +100,32 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- Test Dependencies -->
+        <!-- ========================= -->
+        <!-- TEST DEPENDENCIES -->
+        <!-- ========================= -->
+
+        <!-- Spring Boot Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
 
+        <!-- Spring Security Test -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <scope>test</scope>
-        </dependency>
-
+        <!-- JUnit -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
 
+        <!-- Mockito -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
@@ -128,18 +138,32 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- TestContainers -->
+        <!-- AssertJ -->
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Rest Assured -->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Testcontainers -->
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers</artifactId>
-            <version>1.19.3</version>
+            <version>${testcontainers.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>postgresql</artifactId>
-            <version>1.19.3</version>
+            <version>${testcontainers.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -147,54 +171,94 @@
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit5</artifactId>
-            <version>2.21.0</version>
+            <version>${allure.version}</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <build>
         <plugins>
+
+            <!-- Compiler -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
                 <configuration>
-                    <source>21</source>
-                    <target>21</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
 
-            <!-- Jacoco Plugin for Code Coverage -->
+            <!-- Surefire -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.1.2</version>
+
+                <configuration>
+
+                    <!-- Allure Results -->
+                    <systemPropertyVariables>
+                        <allure.results.directory>
+                            ${project.build.directory}/allure-results
+                        </allure.results.directory>
+                    </systemPropertyVariables>
+
+                    <!-- Test Patterns -->
+                    <includes>
+                        <include>**/*Test.java</include>
+                        <include>**/*Tests.java</include>
+                    </includes>
+
+                </configuration>
+            </plugin>
+
+            <!-- JaCoCo -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco.version}</version>
+
                 <executions>
+
+                    <!-- Coverage Agent -->
                     <execution>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
+
+                    <!-- Coverage Report -->
                     <execution>
                         <id>report</id>
                         <phase>test</phase>
+
                         <goals>
                             <goal>report</goal>
                         </goals>
                     </execution>
+
+                    <!-- Coverage Rules -->
                     <execution>
                         <id>jacoco-check</id>
+
                         <goals>
                             <goal>check</goal>
                         </goals>
+
                         <configuration>
                             <rules>
-                                <!-- Regras críticas: 90% de cobertura -->
+
+                                <!-- Domain -->
                                 <rule>
                                     <element>CLASS</element>
+
                                     <includes>
                                         <include>com.transactionguard.domain.*</include>
                                     </includes>
+
                                     <limits>
                                         <limit>
                                             <counter>LINE</counter>
@@ -203,12 +267,15 @@
                                         </limit>
                                     </limits>
                                 </rule>
-                                <!-- Services: 80% de cobertura -->
+
+                                <!-- Services -->
                                 <rule>
                                     <element>CLASS</element>
+
                                     <includes>
                                         <include>com.transactionguard.service.*</include>
                                     </includes>
+
                                     <limits>
                                         <limit>
                                             <counter>LINE</counter>
@@ -217,12 +284,15 @@
                                         </limit>
                                     </limits>
                                 </rule>
-                                <!-- Controllers: 70% de cobertura -->
+
+                                <!-- Controllers -->
                                 <rule>
                                     <element>CLASS</element>
+
                                     <includes>
                                         <include>com.transactionguard.controller.*</include>
                                     </includes>
+
                                     <limits>
                                         <limit>
                                             <counter>LINE</counter>
@@ -231,12 +301,15 @@
                                         </limit>
                                     </limits>
                                 </rule>
-                                <!-- Repositories: 75% de cobertura -->
+
+                                <!-- Repository -->
                                 <rule>
                                     <element>CLASS</element>
+
                                     <includes>
                                         <include>com.transactionguard.repository.*</include>
                                     </includes>
+
                                     <limits>
                                         <limit>
                                             <counter>LINE</counter>
@@ -245,13 +318,16 @@
                                         </limit>
                                     </limits>
                                 </rule>
-                                <!-- Geral: 70% de cobertura mínima -->
+
+                                <!-- Global -->
                                 <rule>
                                     <element>PACKAGE</element>
+
                                     <excludes>
                                         <exclude>com.transactionguard.config.*</exclude>
                                         <exclude>com.transactionguard.exception.*</exclude>
                                     </excludes>
+
                                     <limits>
                                         <limit>
                                             <counter>LINE</counter>
@@ -260,31 +336,22 @@
                                         </limit>
                                     </limits>
                                 </rule>
+
                             </rules>
                         </configuration>
                     </execution>
+
                 </executions>
             </plugin>
 
-            <!-- Surefire Plugin for Tests -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M9</version>
-                <configuration>
-                    <includes>
-                        <include>**/*Test.java</include>
-                        <include>**/*Tests.java</include>
-                    </includes>
-                </configuration>
-            </plugin>
-
-            <!-- Allure Plugin -->
+            <!-- Allure -->
             <plugin>
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
-                <version>2.11.2</version>
+                <version>2.12.0</version>
             </plugin>
+
         </plugins>
     </build>
+
 </project>
