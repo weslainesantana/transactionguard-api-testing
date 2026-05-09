@@ -1,7 +1,5 @@
 # TransactionGuard
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-
 Uma API backend financeira desenvolvida para demonstrar boas práticas de desenvolvimento e automação de testes.
 
 ## 📋 Sobre o Projeto
@@ -148,10 +146,3 @@ Este projeto visa demonstrar conhecimentos em:
 - [Cobertura de Código](docs/COVERAGE.md) - Metas e manutenção de cobertura
 - [Segurança](docs/SECURITY.md) - Proteção de dados sensíveis
 
-## 📝 Contribuindo
-
-Para contribuir, crie uma branch e envie um pull request.
-
-## 📄 Licença
-
-MIT
