@@ -1,7 +1,5 @@
 # TransactionGuard
 
-[![Build Status](https://github.com/seu-usuario/transactionguard-api/workflows/Build%20and%20Test/badge.svg)](https://github.com/seu-usuario/transactionguard-api/actions)
-[![Code Coverage](https://img.shields.io/badge/coverage-80%25-brightgreen)]()
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 Uma API backend financeira desenvolvida para demonstrar boas práticas de desenvolvimento e automação de testes.
