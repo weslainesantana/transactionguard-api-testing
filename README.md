@@ -1,148 +1,114 @@
 # TransactionGuard
 
-Uma API backend financeira desenvolvida para demonstrar boas práticas de desenvolvimento e automação de testes.
+TransactionGuard é um projeto backend focado em automação de testes e qualidade de software para APIs financeiras.
 
-## 📋 Sobre o Projeto
+O projeto simula operações de transação financeira e foi desenvolvido para demonstrar boas práticas de testes automatizados, cobertura de código, integração contínua e organização de projetos backend com Java e Spring Boot.
 
-TransactionGuard é um projeto que simula operações bancárias básicas, incluindo autenticação JWT, consulta de saldo, transferências e histórico de transações.
+## Tecnologias Utilizadas
 
-Além da implementação da API, o foco principal está na **qualidade do software**, utilizando testes automatizados, integração contínua, relatórios de cobertura e ambiente containerizado com Docker.
+- Java 21
+- Spring Boot
+- Maven
+- JUnit 5
+- Mockito
+- Rest Assured
+- Jacoco
+- Allure Reports
+- Docker
+- GitHub Actions
 
-## 🛠️ Tecnologias Utilizadas
-
-- **Java 21** - Linguagem de programação
-- **Spring Boot** - Framework web
-- **PostgreSQL** - Banco de dados
-- **Flyway** - Controle de versão de banco de dados
-- **JWT** - Autenticação segura
-- **Docker** - Containerização
-- **JUnit 5** - Framework de testes
-- **Rest Assured** - Testes de API
-- **Jacoco** - Relatórios de cobertura
-- **Allure Reports** - Relatórios visuais
-- **GitHub Actions** - CI/CD
-
-## ✨ Funcionalidades
-
-- ✅ Cadastro de usuários
-- ✅ Login com JWT
-- ✅ Consulta de saldo
-- ✅ Transferências entre contas
-- ✅ Histórico de transações
-
-## 📦 Estrutura do Projeto
+## Estrutura do Projeto
 
 ```
-transaction-guard/
-├── src/
-│   ├── main/          # Código-fonte principal
-│   └── test/
-│       ├── unit/          # Testes unitários
-│       ├── integration/    # Testes de integração
-│       └── api/            # Testes de API
-├── docker/            # Configurações Docker
-├── docs/              # Documentação
-├── .github/workflows/ # CI/CD workflows
-├── docker-compose.yml # Orquestração de containers
-├── README.md          # Este arquivo
-└── pom.xml            # Configuração Maven
+src/
+├── main/java/com/transactionguard/
+│   ├── domain/
+│   ├── dto/
+│   ├── exception/
+│   ├── repository/
+│   └── service/
+│
+└── test/
+	├── api/
+	├── integration/
+	└── unit/
 ```
 
-## 🧪 Qualidade e Testes
+## Funcionalidades
 
-O projeto possui uma estratégia abrangente de testes:
+- Simulação de transferências financeiras
+- Regras de validação de transações
+- Tratamento de exceções
+- Camada de serviço para operações financeiras
+- Estrutura de testes organizada por tipo
 
-- **Testes Unitários** - Validação de componentes isolados
-- **Testes de Integração** - Validação entre componentes
-- **Testes de API** - Validação dos endpoints REST
-- **Relatórios de Cobertura** - Jacoco para análise de cobertura
-- **Pipeline CI** - GitHub Actions para integração contínua
-- **Relatórios Allure** - Visualização detalhada de testes
+## Testes Automatizados
 
-### 📊 Metas de Cobertura de Código
+O projeto possui:
 
-| Camada | Meta de Cobertura | Status |
-|--------|-------------------|--------|
-| Services | 80%+ | ✅ Configurado |
-| Controllers | 70%+ | ✅ Configurado |
-| Domain/Regras Críticas | 90%+ | ✅ Configurado |
-| Repositories | 75%+ | ✅ Configurado |
-| **Cobertura Geral** | **70%+** | ✅ Configurado |
+- Testes unitários
+- Testes de integração
+- Testes de API
+- Validação de exceptions
+- Cobertura de código com Jacoco
+- Relatórios Allure
 
-### 🔍 Como Visualizar a Cobertura
+## Cobertura de Código
+
+O projeto utiliza Jacoco para geração de relatórios de cobertura.
+
+Executar cobertura:
 
 ```bash
-# Gerar relatório Jacoco
-mvn clean test
-
-# Abrir relatório no navegador
-open target/site/jacoco/index.html
+mvn clean test jacoco:report
 ```
 
-### 📈 Relatórios Allure
+Relatório gerado em:
 
-```bash
-# Gerar relatório Allure
-mvn allure:report
-
-# Servir relatório localmente
-mvn allure:serve
+```
+target/site/jacoco/index.html
 ```
 
-## 🚀 Como Executar
+## Executando os Testes
 
-### Pré-requisitos
-
-- Java 21+
-- Maven 3.8+
-- Docker (opcional)
-- PostgreSQL (se rodar localmente)
-
-### Localmente
+Executar testes:
 
 ```bash
-# Instalar dependências
-mvn clean install
-
-# Executar a aplicação
-mvn spring-boot:run
-```
-
-### Com Docker
-
-```bash
-# Construir e executar com Docker Compose
-docker-compose up --build
-```
-
-### Rodando Testes
-
-```bash
-# Testes unitários
 mvn test
+```
 
-# Todos os testes (incluindo integração)
+Executar verificação completa:
+
+```bash
 mvn verify
+```
 
-# Gerar relatório Allure
+Gerar relatório Allure:
+
+```bash
 mvn allure:report
 ```
 
-## 🎯 Objetivo
+## Docker
 
-Este projeto visa demonstrar conhecimentos em:
+O projeto possui configuração Docker para ambiente de execução e testes.
 
-- 💻 Backend Java
-- 🔌 APIs REST
-- 🤖 Automação de testes
-- 🔄 Integração contínua
-- ✅ Qualidade de software
-- 📚 Boas práticas de desenvolvimento
+Arquivos disponíveis:
 
-## 📄 Documentação
+- docker/Dockerfile
+- docker-compose.yml
 
-- [Guia de Configuração](docs/SETUP.md) - Setup inicial do projeto
-- [Estratégia de Testes](docs/TESTING.md) - Estrutura e tipos de testes
-- [Cobertura de Código](docs/COVERAGE.md) - Metas e manutenção de cobertura
-- [Segurança](docs/SECURITY.md) - Proteção de dados sensíveis
+## CI/CD
+
+O pipeline automatizado com GitHub Actions executa:
+
+- Build da aplicação
+- Execução dos testes
+- Verificação de cobertura
+- Geração de artefatos
+
+Workflow disponível em:
+
+.github/workflows/build.yml
+
 
