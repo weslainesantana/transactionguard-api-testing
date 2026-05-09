@@ -1,0 +1,53 @@
+# Maven
+target/
+*.jar
+*.war
+*.ear
+.m2/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.c9/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Application
+*.log
+*.pid
+*.seed
+.env.local
+.env.*.local
+.env.production.local
+
+# Secrets & Credentials
+*.key
+*.pem
+*.p12
+*.pfx
+secrets/
+credentials/
+.ssh/
+
+# Configuration (environment-specific)
+application-local.properties
+application-prod.properties
+application-dev.yml
+src/main/resources/config/
+
+# Database
+*.db
+*.sqlite
+db-data/
+postgres-data/
+
+# Test Reports
+allure-results/
+allure-report/

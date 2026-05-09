@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  transaction-guard-api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: transaction-guard-api
+    ports:
+      - "8080:8080"
+    environment:
+      - JAVA_OPTS=-Xmx512m -Xms256m
+    networks:
+      - transaction-guard-network
+
+networks:
+  transaction-guard-network:
+    driver: bridge
